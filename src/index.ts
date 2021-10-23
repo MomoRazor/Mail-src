@@ -2,7 +2,7 @@ import express from 'express';
 import { bouncer } from './middleware';
 import cors from 'cors';
 import helmet from 'helmet';
-import { sendEmail } from './sendMail';
+import { sendEmail } from './mailgunFunctions';
 
 const app = express();
 
