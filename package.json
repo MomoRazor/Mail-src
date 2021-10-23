@@ -1,0 +1,26 @@
+{
+    "name": "mailgun",
+    "version": "1.0.0",
+    "description": "Service for sending Mailgun Emails",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node server.ts"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/MomoRazor/Mailgun.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/MomoRazor/Mailgun/issues"
+    },
+    "homepage": "https://github.com/MomoRazor/Mailgun#readme",
+    "dependencies": {
+        "express": "^4.17.1"
+    },
+    "devDependencies": {
+        "@types/node": "^16.11.4"
+    }
+}
