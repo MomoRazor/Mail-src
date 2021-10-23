@@ -2,4 +2,4 @@ import { config } from 'dotenv';
 
 config();
 
-export const { SERVICE_PROVIDER_DOMAIN } = process.env;
+export const { SERVICE_PROVIDER_DOMAINS } = process.env;
