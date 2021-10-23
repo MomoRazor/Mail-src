@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@MaurovicCachiaSE 
-Enemed-WAPO
-/
-wapo-backend
-Private
-0
-00
-Code
-Issues
-Pull requests
-Actions
-Projects
-Security
-Insights
-wapo-backend/.gitignore
-@MarkSciberrasSE
-MarkSciberrasSE Initial commit
-Latest commit dd24411 on Jul 12
- History
- 1 contributor
-104 lines (76 sloc)  1.57 KB
-   
 # Logs
 logs
 *.log
@@ -67,7 +38,7 @@ bower_components
 build/Release
 
 # Dependency directories
-node_modules/
+/node_modules
 jspm_packages/
 
 # TypeScript v1 declaration files
@@ -131,16 +102,3 @@ dist
 
 # TernJS port file
 .tern-port
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-Loading complete

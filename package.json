@@ -1,5 +1,5 @@
 {
-    "name": "mailgun",
+    "name": "mailgun-src",
     "version": "1.0.0",
     "description": "Service for sending Mailgun Emails",
     "main": "index.js",
@@ -11,14 +11,14 @@
     },
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/MomoRazor/Mailgun.git"
+        "url": "git+https://github.com/MomoRazor/Mailgun-src.git"
     },
     "author": "",
     "license": "ISC",
     "bugs": {
-        "url": "https://github.com/MomoRazor/Mailgun/issues"
+        "url": "https://github.com/MomoRazor/Mailgun-src/issues"
     },
-    "homepage": "https://github.com/MomoRazor/Mailgun#readme",
+    "homepage": "https://github.com/MomoRazor/Mailgun-src#readme",
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^10.0.0",
