@@ -1,5 +1,6 @@
 import express from 'express';
 import { bouncer } from './middleware';
+import { json } from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import { sendEmail } from './mailgunFunctions';
@@ -10,7 +11,7 @@ app.use(cors());
 app.use(helmet());
 app.use(bouncer);
 
-app.post('/send', async (req, res) => {
+app.post('/send', json(), async (req, res) => {
     if (req.body.mailgunId && req.body.mailgunDomain) {
         if (req.body.from && req.body.to && req.body.subject && req.body.html) {
             try {
