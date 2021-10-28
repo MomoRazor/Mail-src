@@ -1,9 +1,12 @@
-import mailgunJS from 'mailgun-js';
+import Mailgun from 'mailgun.js';
+import formData from 'form-data';
 
-const getEmailClient = (api: string, domain: string) => {
-    return mailgunJS({
-        apiKey: api,
-        domain: domain
+const getEmailClient = (api: string) => {
+    const mailgun = new Mailgun(formData);
+
+    return mailgun.client({
+        username: 'api',
+        key: api
     });
 };
 
@@ -15,21 +18,12 @@ export const sendEmail = async (
     subject: string,
     html: string
 ) => {
-    const client = getEmailClient(mailgunId, mailgunDomain);
+    const client = getEmailClient(mailgunId);
 
-    return await client.messages().send(
-        {
-            from: from,
-            to: to,
-            subject: subject,
-            html: html
-        },
-        (err: any, body: any) => {
-            if (err) {
-                throw 'Got an error: ' + err;
-            } else {
-                return body;
-            }
-        }
-    );
+    return await client.messages.create(mailgunDomain, {
+        from: from,
+        to: to,
+        subject: subject,
+        html: html
+    });
 };
