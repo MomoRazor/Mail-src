@@ -28,9 +28,11 @@ app.post('/send', json(), async (req, res) => {
                 res.status(500).send(e);
             }
         } else {
+            console.error('Email Information Missing');
             res.status(400).send('Email Information Missing');
         }
     } else {
+        console.error('Required Credentials Missing');
         res.status(400).send('Required Credentials Missing');
     }
 });
