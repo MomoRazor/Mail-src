@@ -23,7 +23,7 @@ app.post('/send', json(), async (req, res) => {
                     req.body.subject,
                     req.body.html
                 );
-                res.send('Successfully send email!');
+                res.status(200).send('Successfully send email!');
             } catch (e) {
                 console.error(e);
                 res.status(500).send(e);
