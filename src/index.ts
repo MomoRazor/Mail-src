@@ -25,6 +25,7 @@ app.post('/send', json(), async (req, res) => {
                 );
                 res.send('Successfully send email!');
             } catch (e) {
+                console.error(e);
                 res.status(500).send(e);
             }
         } else {
