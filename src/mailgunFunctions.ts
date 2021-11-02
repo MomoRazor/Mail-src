@@ -6,7 +6,7 @@ const getEmailClient = (api: string) => {
 
     return mailgun.client({
         username: 'api',
-        key: api
+        key: 'key-' + api
     });
 };
 
