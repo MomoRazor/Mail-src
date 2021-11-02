@@ -1,14 +1,5 @@
-import Mailgun from 'mailgun.js';
-import formData from 'form-data';
-
-const getEmailClient = (api: string) => {
-    const mailgun = new Mailgun(formData);
-
-    return mailgun.client({
-        username: 'api',
-        key: 'key-' + api
-    });
-};
+import axios from 'axios';
+import { EUBaseURL } from './config';
 
 export const sendEmail = async (
     mailgunId: string,
@@ -18,12 +9,19 @@ export const sendEmail = async (
     subject: string,
     html: string
 ) => {
-    const client = getEmailClient(mailgunId);
-
-    return await client.messages.create(mailgunDomain, {
-        from: from,
-        to: to,
-        subject: subject,
-        html: html
-    });
+    return await axios.post(
+        EUBaseURL + '/v3/' + mailgunDomain,
+        {
+            from: from,
+            to: to,
+            subject: subject,
+            html: html
+        },
+        {
+            auth: {
+                username: 'api',
+                password: mailgunId
+            }
+        }
+    );
 };
