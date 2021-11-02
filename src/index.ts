@@ -21,7 +21,8 @@ app.post('/send', json(), async (req, res) => {
                     req.body.from,
                     req.body.to,
                     req.body.subject,
-                    req.body.html
+                    req.body.html,
+                    req.body.mailgunUrl
                 );
                 res.status(200).send('Successfully send email!');
             } catch (e) {
