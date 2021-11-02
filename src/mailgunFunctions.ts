@@ -1,13 +1,12 @@
 import Mailgun from 'mailgun.js';
 import formData from 'form-data';
 
-const getEmailClient = (api: string, url?: string) => {
+const getEmailClient = (api: string) => {
     const mailgun = new Mailgun(formData);
 
     return mailgun.client({
         username: 'api',
-        key: api,
-        url: url
+        key: api
     });
 };
 
@@ -17,10 +16,9 @@ export const sendEmail = async (
     from: string,
     to: string[],
     subject: string,
-    html: string,
-    mailgunUrl?: string
+    html: string
 ) => {
-    const client = getEmailClient(mailgunId, mailgunUrl);
+    const client = getEmailClient(mailgunId);
 
     return await client.messages.create(mailgunDomain, {
         from: from,
