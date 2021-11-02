@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { EUBaseURL } from './config';
+import { EUBaseURL, Hosted, USBaseURL } from './config';
 
 export const sendEmail = async (
     mailgunId: string,
@@ -7,10 +7,11 @@ export const sendEmail = async (
     from: string,
     to: string[],
     subject: string,
-    html: string
+    html: string,
+    hosted?: Hosted
 ) => {
     return await axios.post(
-        EUBaseURL + '/v3/' + mailgunDomain,
+        hosted === Hosted.US ? USBaseURL : EUBaseURL + '/v3/' + mailgunDomain,
         {
             from: from,
             to: to,
