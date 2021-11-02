@@ -25,14 +25,17 @@ app.post('/send', json(), async (req, res) => {
                 );
                 res.status(200).send('Successfully send email!');
             } catch (e) {
+                console.log('Test');
                 console.error(e);
                 res.status(500).send(e);
             }
         } else {
+            console.log('Test1');
             console.error('Email Information Missing');
             res.status(400).send('Email Information Missing');
         }
     } else {
+        console.log('Test3');
         console.error('Required Credentials Missing');
         res.status(400).send('Required Credentials Missing');
     }
