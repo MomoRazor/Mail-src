@@ -10,6 +10,15 @@ export const sendEmail = async (
     html: string,
     hosted?: Hosted
 ) => {
+    console.log(hosted === Hosted.US ? USBaseURL : EUBaseURL + 'v3/' + mailgunDomain);
+
+    console.log({
+        from: from,
+        to: to,
+        subject: subject,
+        html: html
+    });
+
     return await axios.post(
         hosted === Hosted.US ? USBaseURL : EUBaseURL + 'v3/' + mailgunDomain,
         {
