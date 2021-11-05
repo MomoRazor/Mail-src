@@ -6,14 +6,14 @@ export const sendEmail = async (
     mailgunId: string,
     mailgunDomain: string,
     from: string,
-    to: string[],
+    to: string,
     subject: string,
     html: string,
     hosted?: Hosted
 ) => {
     const form = new FormData();
 
-    form.append('fron', from);
+    form.append('from', from);
     form.append('to', to);
     form.append('subject', subject);
     form.append('html', html);
