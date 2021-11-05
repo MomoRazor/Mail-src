@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { EUBaseURL, Hosted, USBaseURL } from './config';
+import FormData from 'form-data';
 
 export const sendEmail = async (
     mailgunId: string,
@@ -10,17 +11,18 @@ export const sendEmail = async (
     html: string,
     hosted?: Hosted
 ) => {
-    console.log('From', from);
+    const form = new FormData();
+
+    form.append('fron', from);
+    form.append('to', to);
+    form.append('subject', subject);
+    form.append('html', html);
 
     return await axios.post(
         hosted === Hosted.US ? USBaseURL : EUBaseURL + 'v3/' + mailgunDomain + '/messages',
+        form,
         {
-            from: from,
-            to: to,
-            subject: subject,
-            html: html
-        },
-        {
+            headers: form.getHeaders(),
             auth: {
                 username: 'api',
                 password: mailgunId
