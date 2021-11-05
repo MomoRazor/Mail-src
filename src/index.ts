@@ -14,12 +14,13 @@ app.use(bouncer);
 app.post('/send', json(), async (req, res) => {
     if (req.body.mailgunId && req.body.mailgunDomain) {
         if (req.body.from && req.body.to && req.body.subject && req.body.html) {
+            const actualTo = Array.isArray(req.body.to) ? req.body.to.join(',') : req.body.to;
             try {
                 await sendEmail(
                     req.body.mailgunId,
                     req.body.mailgunDomain,
                     req.body.from,
-                    req.body.to,
+                    actualTo,
                     req.body.subject,
                     req.body.html,
                     req.body.hosted
