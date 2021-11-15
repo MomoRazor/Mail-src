@@ -1,32 +1,28 @@
-import axios from 'axios';
 import { EUBaseURL, Hosted, USBaseURL } from './config';
 import FormData from 'form-data';
+import Mailgun from 'mailgun.js';
 
 export const sendEmail = async (
     mailgunId: string,
     mailgunDomain: string,
     from: string,
-    to: string,
+    to: string[] | string,
     subject: string,
     html: string,
     hosted?: Hosted
 ) => {
-    const form = new FormData();
+    const mailgun = new Mailgun(FormData);
 
-    form.append('from', from);
-    form.append('to', to);
-    form.append('subject', subject);
-    form.append('html', html);
+    const mg = mailgun.client({
+        username: 'api',
+        key: mailgunId,
+        url: hosted === Hosted.EU ? EUBaseURL : USBaseURL
+    });
 
-    return await axios.post(
-        hosted === Hosted.US ? USBaseURL : EUBaseURL + 'v3/' + mailgunDomain + '/messages',
-        form,
-        {
-            headers: form.getHeaders(),
-            auth: {
-                username: 'api',
-                password: mailgunId
-            }
-        }
-    );
+    mg.messages.create(mailgunDomain, {
+        to,
+        from,
+        subject,
+        html
+    });
 };
