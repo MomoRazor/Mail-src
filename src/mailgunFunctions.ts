@@ -16,7 +16,7 @@ export const sendEmail = async (
     const mg = mailgun.client({
         username: 'api',
         key: mailgunId,
-        url: hosted === Hosted.EU ? EUBaseURL : USBaseURL
+        url: hosted === Hosted.US ? USBaseURL : EUBaseURL
     });
 
     mg.messages.create(mailgunDomain, {
