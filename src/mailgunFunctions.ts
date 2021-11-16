@@ -2,6 +2,8 @@ import { EUBaseURL, Hosted, USBaseURL } from './config';
 import FormData from 'form-data';
 import Mailgun from 'mailgun.js';
 
+const mailgun = new Mailgun(FormData);
+
 export const sendEmail = async (
     mailgunId: string,
     mailgunDomain: string,
@@ -11,8 +13,6 @@ export const sendEmail = async (
     html: string,
     hosted?: Hosted
 ) => {
-    const mailgun = new Mailgun(FormData);
-
     const mg = mailgun.client({
         username: 'api',
         key: mailgunId,
@@ -20,7 +20,7 @@ export const sendEmail = async (
     });
 
     mg.messages.create(mailgunDomain, {
-        to,
+        to: Array.isArray(to) ? to : [to],
         from,
         subject,
         html

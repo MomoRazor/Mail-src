@@ -12,6 +12,7 @@ app.use(helmet());
 app.use(bouncer);
 
 app.post('/send', json(), async (req, res) => {
+    console.log('Test');
     if (req.body.mailgunId && req.body.mailgunDomain) {
         if (req.body.from && req.body.to && req.body.subject && req.body.html) {
             // const actualTo = Array.isArray(req.body.to) ? req.body.to.join(',') : req.body.to;
