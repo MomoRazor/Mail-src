@@ -1,6 +1,6 @@
 {
     "name": "mailgun-src",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "Service for sending Mailgun Emails",
     "main": "index.js",
     "scripts": {
@@ -26,17 +26,17 @@
         "dotenv": "16.0.3",
         "express": "4.18.2",
         "form-data": "4.0.0",
-        "helmet": "6.0.0",
-        "mailgun.js": "8.0.1"
+        "helmet": "6.0.1",
+        "mailgun.js": "8.0.6"
     },
     "devDependencies": {
-        "@types/cors": "2.8.12",
+        "@types/cors": "2.8.13",
         "@types/express": "4.17.14",
-        "@types/node": "18.11.0",
+        "@types/node": "18.11.10",
         "nodemon": "2.0.20",
         "npm-check": "6.0.1",
         "ts-node": "10.9.1",
-        "typescript": "4.8.4"
+        "typescript": "4.9.3"
     },
     "engines": {
         "node": "16.x"
