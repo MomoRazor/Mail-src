@@ -1,15 +1,37 @@
 import express from 'express';
-import { bouncer } from './middleware';
 import { json } from 'body-parser';
 import cors from 'cors';
 import helmet from 'helmet';
 import { sendEmail } from './mailgunFunctions';
+import { authRoutes } from './api/AuthApi';
+import Mailgun from 'mailgun.js';
+import FormData from 'form-data';
+import { MailgunSvc } from './svc';
+import { MailRepo } from './data';
 
-const app = express();
+const main = async () => {
+	// Init database
+	const databaseConnection = mongoose.createConnection(MONGO_URL)
 
-app.use(cors());
-app.use(helmet());
-app.use(bouncer);
+
+	const mailRepo = await MailRepo(databaseConnection)
+
+    const mailgun = new Mailgun(FormData);
+
+	const mailgunSvc = MailgunSvc(mailRepo,mailgun)
+
+    
+    const app = express();
+
+    app.use(cors());
+    app.use(helmet());
+
+
+    AuthApi(app)
+
+
+}
+
 
 app.post('/send', json(), async (req, res) => {
     if (req.body.mailgunId && req.body.mailgunDomain) {
@@ -37,10 +59,6 @@ app.post('/send', json(), async (req, res) => {
         console.error('Required Credentials Missing');
         res.status(400).send('Required Credentials Missing');
     }
-});
-
-app.get('/', (_, res) => {
-    res.send('Hello from my Mailgun Service!');
 });
 
 const PORT = process.env.PORT || 8080;
