@@ -17,7 +17,7 @@ export interface IMailgunSvc {
         to: string[] | string,
         subject: string,
         html: string,
-        hosted?: Hosted) => Promise<Mail>
+        hosted?: Hosted) => Promise<Mail | null>
 }
 
 export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
@@ -58,19 +58,23 @@ export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
                 html
             });
 
-            await mailRepo.findByIdAndUpdate(mail._id, {
+            return await mailRepo.findByIdAndUpdate(mail._id, {
                 $set: {
                     status: 'Sent'
                 }
-            })
+            }).lean()
 
         }catch(e){
             
-            await mailRepo.findByIdAndUpdate(mail._id, {
+            return await mailRepo.findByIdAndUpdate(mail._id, {
                 $set: {
                     status: 'Error'
                 }
-            })
+            }).lean()
         }
     };
+
+    return {
+        send
+    }
 }

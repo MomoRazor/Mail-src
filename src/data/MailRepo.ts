@@ -1,12 +1,22 @@
 import { Schema, Model, Connection } from 'mongoose'
 
+export interface PaginationFilter {
+	filter: any
+	page: number
+	limit: number
+	sort: string
+	projection: string
+}
+
+export type MailStatus = 'Sent' | 'Error' | 'Pending'
+
 export interface Mail {
     from: string
 	to: string
 	subject: string
 	body: string
 	service: 'Mailgun'
-    status: 'Sent' | 'Error' | 'Pending'
+    status: MailStatus
 }
 
 export type IMailRepo = Model<Mail>
