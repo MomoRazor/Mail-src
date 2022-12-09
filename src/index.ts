@@ -13,7 +13,6 @@ const main = async () => {
 	// Init database
 	const databaseConnection = mongoose.createConnection(MONGO_URL)
 
-
 	const mailRepo = await MailRepo(databaseConnection)
 
     const mailgun = new Mailgun(FormData);
@@ -27,7 +26,6 @@ const main = async () => {
 
     app.use(cors());
     app.use(helmet());
-
 
     AuthApi(app)
     MailgunApi(app, mailgunSvc, prefix)
