@@ -3,8 +3,19 @@ import { IMailRepo, Mail } from '../data';
 
 export interface IMailjetSvc {
     send: (
-        from: string,
-        to: string[] | string,
+        from: {
+            email: string;
+            name: string;
+        },
+        to:
+            | {
+                  email: string;
+                  name: string;
+              }[]
+            | {
+                  email: string;
+                  name: string;
+              },
         subject: string,
         html: string
     ) => Promise<Mail | null>;
