@@ -19,13 +19,28 @@ export const USES = process.env.USES;
 export const supportedServices = ['Mailgun'];
 
 if (!supportedServices.includes(USES))
-    throw new Error('Service defined in USES environment variable is unsupported');
+    throw new Error(
+        `Environment variable USES must be one of the following: ${supportedServices.join(',')}!`
+    );
 
 if (USES === 'Mailgun') {
     if (!process.env.MAILGUN_ID) throw new Error(`Missing environment variable MAILGUN_ID!`);
     if (!process.env.MAILGUN_DOMAIN)
         throw new Error(`Missing environment variable MAILGUN_DOMAIN!`);
+
+    if (!process.env.MAILGUN_HOSTING)
+        throw new Error(`Missing environment variable MAILGUN_HOSTING!`);
+
+    const supportedMailgunHostingOptions = ['EU', 'US'];
+
+    if (!supportedMailgunHostingOptions.includes(process.env.MAILGUN_HOSTING))
+        throw new Error(
+            `Environment variable MAILGUN_HOSTING must be one of the following: ${supportedMailgunHostingOptions.join(
+                ','
+            )}!`
+        );
 }
 
 export const MAILGUN_ID = process.env.MAILGUN_ID;
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
+export const MAILGUN_HOSTING = process.env.MAILGUN_HOSTING;

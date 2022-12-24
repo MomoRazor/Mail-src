@@ -1,34 +1,22 @@
 import Mailgun from 'mailgun.js';
 import { IMailRepo, Mail } from '../data';
-import { MAILGUN_DOMAIN, MAILGUN_ID } from '../env';
+import { MAILGUN_DOMAIN, MAILGUN_HOSTING, MAILGUN_ID } from '../env';
 
 export const USBaseURL = 'https://api.mailgun.net/';
 
 export const EUBaseURL = 'https://api.eu.mailgun.net/';
-
-export enum Hosted {
-    US = 'US',
-    EU = 'EU'
-}
 
 export interface IMailgunSvc {
     send: (
         from: string,
         to: string[] | string,
         subject: string,
-        html: string,
-        hosted?: Hosted
+        html: string
     ) => Promise<Mail | null>;
 }
 
 export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
-    const send = async (
-        from: string,
-        to: string[] | string,
-        subject: string,
-        html: string,
-        hosted?: Hosted
-    ) => {
+    const send = async (from: string, to: string[] | string, subject: string, html: string) => {
         const mail = await mailRepo.create({
             from,
             to: Array.isArray(to) ? to.join(',') : to,
@@ -46,7 +34,7 @@ export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
             const mg = mailGunInstance.client({
                 username: 'api',
                 key: MAILGUN_ID as string,
-                url: hosted === Hosted.US ? USBaseURL : EUBaseURL
+                url: MAILGUN_HOSTING === 'US' ? USBaseURL : EUBaseURL
             });
 
             await mg.messages.create(MAILGUN_DOMAIN as string, {
