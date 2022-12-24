@@ -8,7 +8,7 @@ import FormData from 'form-data';
 import { MailgunSvc, MailjetSvc, MailSvc } from './svc';
 import { MailRepo } from './data';
 import mongoose from 'mongoose';
-import { GATED, MAILJET_KEY, MAILJET_SECRET, MONGO_URL, PORT, USES } from './env';
+import { MAILJET_KEY, MAILJET_SECRET, MONGO_URL, PORT, USES } from './env';
 
 const main = async () => {
     // Init database
@@ -25,9 +25,7 @@ const main = async () => {
 
     const mailSvc = MailSvc(mailRepo);
 
-    if (GATED === 'true') {
-        AuthApi(app);
-    }
+    AuthApi(app);
 
     MailApi(app, mailSvc, prefix);
     if (USES === 'Mailgun') {

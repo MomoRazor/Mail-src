@@ -5,13 +5,11 @@ if (!process.env.MONGO_URL) throw new Error(`Missing environment variable MONGO_
 
 export const MONGO_URL = process.env.MONGO_URL;
 
-if (!process.env.GATED) throw new Error(`Missing environment variable GATED!`);
-export const GATED = process.env.GATED;
+if (!process.env.RBAC_SECRET && !process.env.API_KEY)
+    throw new Error(`Missing both RBAC_SECRET and APIK_KEY environment variables!`);
 
-if (GATED === 'true') {
-    if (!process.env.JWT_SECRET) throw new Error(`Missing environment variable JWT_SECRET!`);
-}
-export const JWT_SECRET = process.env.JWT_SECRET;
+export const RBAC_SECRET = process.env.RBAC_SECRET;
+export const API_KEY = process.env.API_KEY;
 
 if (!process.env.PORT) throw new Error(`Missing environment variable PORT!`);
 
