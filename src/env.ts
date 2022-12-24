@@ -16,7 +16,7 @@ if (!process.env.USES) throw new Error(`Missing environment variable USES!`);
 
 export const USES = process.env.USES;
 
-export const supportedServices = ['Mailgun'];
+export const supportedServices = ['Mailgun', 'Mailjet'];
 
 if (!supportedServices.includes(USES))
     throw new Error(
@@ -39,7 +39,15 @@ if (USES === 'Mailgun') {
                 ','
             )}!`
         );
+} else if (USES === 'Mailjet') {
+    if (!process.env.MAILJET_KEY) throw new Error(`Missing environment variable MAILJET_KEY!`);
+
+    if (!process.env.MAILJET_SECRET)
+        throw new Error(`Missing environment variable MAILJET_SECRET!`);
 }
+
+export const MAILJET_KEY = process.env.MAILJET_KEY;
+export const MAILJET_SECRET = process.env.MAILJET_SECRET;
 
 export const MAILGUN_ID = process.env.MAILGUN_ID;
 export const MAILGUN_DOMAIN = process.env.MAILGUN_DOMAIN;
