@@ -11,6 +11,8 @@ import mongoose from 'mongoose';
 import { MAILJET_KEY, MAILJET_SECRET, MONGO_URL, PORT, USES } from './env';
 
 const main = async () => {
+    console.log(MONGO_URL);
+
     // Init database
     const databaseConnection = mongoose.createConnection(MONGO_URL);
 
