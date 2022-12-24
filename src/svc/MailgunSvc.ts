@@ -1,5 +1,6 @@
-import Mailgun from "mailgun.js";
-import { IMailRepo, Mail } from "../data";
+import Mailgun from 'mailgun.js';
+import { IMailRepo, Mail } from '../data';
+import { MAILGUN_DOMAIN, MAILGUN_ID } from '../env';
 
 export const USBaseURL = 'https://api.mailgun.net/';
 
@@ -11,26 +12,23 @@ export enum Hosted {
 }
 
 export interface IMailgunSvc {
-	send: (mailgunId: string,
-        mailgunDomain: string,
+    send: (
         from: string,
         to: string[] | string,
         subject: string,
         html: string,
-        hosted?: Hosted) => Promise<Mail | null>
+        hosted?: Hosted
+    ) => Promise<Mail | null>;
 }
 
 export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
     const send = async (
-        mailgunId: string,
-        mailgunDomain: string,
         from: string,
         to: string[] | string,
         subject: string,
         html: string,
         hosted?: Hosted
     ) => {
-
         const mail = await mailRepo.create({
             from,
             to: Array.isArray(to) ? to.join(',') : to,
@@ -38,43 +36,45 @@ export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
             body: html,
             service: 'Mailgun',
             status: 'Pending'
-        })
+        });
 
-        if(!mail){
-            throw new Error('Failed to create Mail Object')
+        if (!mail) {
+            throw new Error('Failed to create Mail Object');
         }
 
-        try{
+        try {
             const mg = mailGunInstance.client({
                 username: 'api',
-                key: mailgunId,
+                key: MAILGUN_ID as string,
                 url: hosted === Hosted.US ? USBaseURL : EUBaseURL
             });
-        
-            await mg.messages.create(mailgunDomain, {
+
+            await mg.messages.create(MAILGUN_DOMAIN as string, {
                 to: Array.isArray(to) ? to : [to],
                 from,
                 subject,
                 html
             });
 
-            return await mailRepo.findByIdAndUpdate(mail._id, {
-                $set: {
-                    status: 'Sent'
-                }
-            }).lean()
-
-        }catch(e){
-            
-            return await mailRepo.findByIdAndUpdate(mail._id, {
-                $set: {
-                    status: 'Error'
-                }
-            }).lean()
+            return await mailRepo
+                .findByIdAndUpdate(mail._id, {
+                    $set: {
+                        status: 'Sent'
+                    }
+                })
+                .lean();
+        } catch (e) {
+            return await mailRepo
+                .findByIdAndUpdate(mail._id, {
+                    $set: {
+                        status: 'Error'
+                    }
+                })
+                .lean();
         }
     };
 
     return {
         send
-    }
-}
+    };
+};
