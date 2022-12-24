@@ -5,7 +5,12 @@ if (!process.env.MONGO_URL) throw new Error(`Missing environment variable MONGO_
 
 export const MONGO_URL = process.env.MONGO_URL;
 
-if (!process.env.JWT_SECRET) throw new Error(`Missing environment variable JWT_SECRET!`);
+if (!process.env.GATED) throw new Error(`Missing environment variable GATED!`);
+export const GATED = process.env.GATED;
+
+if (GATED === 'true') {
+    if (!process.env.JWT_SECRET) throw new Error(`Missing environment variable JWT_SECRET!`);
+}
 export const JWT_SECRET = process.env.JWT_SECRET;
 
 if (!process.env.PORT) throw new Error(`Missing environment variable PORT!`);
