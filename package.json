@@ -28,14 +28,14 @@
         "helmet": "6.0.1",
         "jsonwebtoken": "9.0.0",
         "mailgun.js": "8.0.6",
-        "mongoose": "6.8.1",
-        "node-mailjet": "5.1.1"
+        "mongoose": "6.8.2",
+        "node-mailjet": "6.0.0"
     },
     "devDependencies": {
         "@types/cors": "2.8.13",
         "@types/express": "4.17.15",
         "@types/jsonwebtoken": "9.0.0",
-        "@types/node": "18.11.17",
+        "@types/node": "18.11.18",
         "nodemon": "2.0.20",
         "npm-check": "6.0.1",
         "ts-node": "10.9.1",
