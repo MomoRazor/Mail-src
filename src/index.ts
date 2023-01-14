@@ -16,8 +16,6 @@ const main = async () => {
 
     const mailRepo = await MailRepo(databaseConnection);
 
-    const prefix = '/mail';
-
     const app = express();
 
     app.use(cors());
@@ -27,11 +25,11 @@ const main = async () => {
 
     AuthApi(app);
 
-    MailApi(app, mailSvc, prefix);
+    MailApi(app, mailSvc);
     if (USES === 'Mailgun') {
         const mailgun = new Mailgun(FormData);
         const mailgunSvc = MailgunSvc(mailRepo, mailgun);
-        MailgunApi(app, mailgunSvc, prefix);
+        MailgunApi(app, mailgunSvc);
     } else if (USES === 'Mailjet') {
         const mailjet = new Mailjet({
             apiKey: MAILJET_KEY,
@@ -39,7 +37,7 @@ const main = async () => {
         });
 
         const mailjetSvc = MailjetSvc(mailRepo, mailjet);
-        MailjetApi(app, mailjetSvc, prefix);
+        MailjetApi(app, mailjetSvc);
     }
 
     // Start application

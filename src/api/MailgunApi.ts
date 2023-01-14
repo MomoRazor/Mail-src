@@ -1,7 +1,7 @@
 import { Application } from 'express';
 import { IMailgunSvc } from '../svc';
 
-export const MailgunApi = (app: Application, mailGunSvc: IMailgunSvc, prefix: string) => {
+export const MailgunApi = (app: Application, mailGunSvc: IMailgunSvc, prefix: string = '') => {
     app.post(`${prefix}/mailgun/send`, async (req, res) => {
         try {
             const { body } = req;
