@@ -84,12 +84,12 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
                     }
                 })
                 .lean();
-        } catch (e) {
+        } catch (e: any) {
             await mailRepo
                 .findByIdAndUpdate(mail._id, {
                     $set: {
                         status: 'Error',
-                        error: e
+                        error: e.toString()
                     }
                 })
                 .lean();

@@ -51,12 +51,12 @@ export const MailgunSvc = (mailRepo: IMailRepo, mailGunInstance: Mailgun) => {
                     }
                 })
                 .lean();
-        } catch (e) {
+        } catch (e: any) {
             await mailRepo
                 .findByIdAndUpdate(mail._id, {
                     $set: {
                         status: 'Error',
-                        error: e
+                        error: e.toString()
                     }
                 })
                 .lean();
