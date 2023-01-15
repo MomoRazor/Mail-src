@@ -52,35 +52,37 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
             throw new Error('Failed to create Mail Object');
         }
 
+        const request = {
+            Messages: [
+                {
+                    From: {
+                        Email: from.email,
+                        Name: from.name
+                    },
+                    To: Array.isArray(to)
+                        ? to.map((target) => ({
+                              Email: target.email,
+                              Name: target.name
+                          }))
+                        : [
+                              {
+                                  Email: to.email,
+                                  Name: to.name
+                              }
+                          ],
+                    Subject: subject,
+                    HTMLPart: html
+                }
+            ]
+        };
         try {
-            await mailJetInstance.post('send', { version: 'v3.1' }).request({
-                Messages: [
-                    {
-                        From: {
-                            Email: from.email,
-                            Name: from.name
-                        },
-                        To: Array.isArray(to)
-                            ? to.map((target) => ({
-                                  Email: target.email,
-                                  Name: target.name
-                              }))
-                            : [
-                                  {
-                                      Email: to.email,
-                                      Name: to.name
-                                  }
-                              ],
-                        Subject: subject,
-                        HTMLPart: html
-                    }
-                ]
-            });
+            await mailJetInstance.post('send', { version: 'v3.1' }).request(request);
 
             return await mailRepo
                 .findByIdAndUpdate(mail._id, {
                     $set: {
-                        status: 'Sent'
+                        status: 'Sent',
+                        request
                     }
                 })
                 .lean();
@@ -89,6 +91,7 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
                 .findByIdAndUpdate(mail._id, {
                     $set: {
                         status: 'Error',
+                        request,
                         error: e.toString()
                     }
                 })
