@@ -85,13 +85,15 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
                 })
                 .lean();
         } catch (e) {
-            return await mailRepo
+            await mailRepo
                 .findByIdAndUpdate(mail._id, {
                     $set: {
-                        status: 'Error'
+                        status: 'Error',
+                        error: e
                     }
                 })
                 .lean();
+            throw new Error('Failed to send Mail');
         }
     };
 

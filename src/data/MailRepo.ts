@@ -16,6 +16,7 @@ export interface Mail {
     subject: string;
     body: string;
     service: 'Mailgun' | 'Mailjet';
+    error?: any;
     status: MailStatus;
 }
 
@@ -27,6 +28,7 @@ const MailSchema = new Schema<Mail>({
     subject: { type: Schema.Types.String, required: true },
     body: { type: Schema.Types.String, required: true },
     service: { type: Schema.Types.String, enum: ['Mailgun', 'Mailjet'], required: true },
+    error: { type: Schema.Types.Mixed, required: false },
     status: {
         type: Schema.Types.String,
         enum: ['Sent', 'Error', 'Pending'],
