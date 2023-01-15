@@ -40,8 +40,8 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
         html: string
     ) => {
         const mail = await mailRepo.create({
-            from,
-            to: Array.isArray(to) ? to.join(',') : to,
+            from: from.email,
+            to: Array.isArray(to) ? to.map((to) => to.email).join(',') : to.email,
             subject,
             body: html,
             service: 'Mailjet',
