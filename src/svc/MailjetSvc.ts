@@ -56,18 +56,15 @@ export const MailjetSvc = (mailRepo: IMailRepo, mailJetInstance: Mailjet) => {
             Messages: [
                 {
                     From: {
-                        Email: from.email,
-                        Name: from.name
+                        Email: from
                     },
                     To: Array.isArray(to)
                         ? to.map((target) => ({
-                              Email: target.email,
-                              Name: target.name
+                              Email: target
                           }))
                         : [
                               {
-                                  Email: to.email,
-                                  Name: to.name
+                                  Email: to
                               }
                           ],
                     Subject: subject,
