@@ -1,6 +1,6 @@
 import express from 'express';
 import cors from 'cors';
-import helmet from 'helmet';
+import morgan from 'morgan';
 import { AuthApi, MailApi, MailgunApi, MailjetApi } from './api';
 import Mailgun from 'mailgun.js';
 import Mailjet from 'node-mailjet';
@@ -17,9 +17,9 @@ const main = async () => {
     const mailRepo = await MailRepo(databaseConnection);
 
     const app = express();
-
+    app.use(express.json({ limit: '1mb' }));
     app.use(cors());
-    app.use(helmet());
+    app.use(morgan('dev'));
 
     const mailSvc = MailSvc(mailRepo);
 
