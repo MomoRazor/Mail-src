@@ -10,7 +10,7 @@ services:
                 USER_GID: 1000
 
         ports:
-            - '8081:8081'
+            - '8083:8083'
 
         volumes:
             - ..:/workspace:cached

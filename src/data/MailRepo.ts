@@ -1,13 +1,5 @@
 import { Schema, Model, Connection } from 'mongoose';
 
-export interface PaginationFilter {
-    filter: any;
-    page: number;
-    limit: number;
-    sort: string;
-    projection: string;
-}
-
 export type MailStatus = 'Sent' | 'Error' | 'Pending';
 
 export interface Mail {
